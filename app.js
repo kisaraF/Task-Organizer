@@ -7,6 +7,7 @@ let empty = document.querySelector('.empy-container')
 
 //Functions
 
+//Empty Tag
 const emptyTag= document.createElement('div');
 const emptyIcon = document.createElement('div');
 const emptyText = document.createElement('div');
@@ -18,7 +19,7 @@ emptyText.textContent= "No Items For You. Start Adding";
 emptyIcon.style.marginBottom= '1em';
 emptyTag.appendChild(emptyText);
 empty.appendChild(emptyTag);
-//emptyTag.style.display='none';
+emptyTag.style.display='none';
 
 //When page loads
 document.addEventListener('DOMContentLoaded', getTasks);
@@ -86,17 +87,12 @@ function getTasks() {
 
 //Check whether there are items
 function init() {
-	let tasks;
-	if (localStorage.getItem('tasks') === null) {//Checking whether there are any items
-		tasks = [];
-	} else {
-		tasks = JSON.parse(localStorage.getItem('tasks')); //If there's make it a string
-	}
-
-	if (localStorage.getItem('tasks')=== []) {//Checking whether there are any items
-		emptyTag.style.display = 'block';
-	} else {
+	if (displayArea.hasChildNodes()) { //Check whether there are children for the specific element
+		//console.log("Not Empty");
 		emptyTag.style.display = 'none';
+	} else {
+		//console.log("It's Empty");
+		emptyTag.style.display = 'block';
 	}
 }
 
@@ -110,7 +106,7 @@ let altAdd= (e) => {
 //Creating a Row
 let addNew = () => {
 	//Remove empty-tag
-	//emptyTag.style.display = 'none';
+	emptyTag.style.display = 'none';
 
 	//Select Textbox Input
 	let textBox= document.getElementById('inputBox').value;
