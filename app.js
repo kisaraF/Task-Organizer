@@ -110,57 +110,62 @@ let altAdd= (e) => {
 //Creating a Row
 let addNew = () => {
 	//Remove empty-tag
-	emptyTag.style.display = 'none';
+	//emptyTag.style.display = 'none';
 
 	//Select Textbox Input
 	let textBox= document.getElementById('inputBox').value;
 
-	//Create 2 variables for the master div and text to add from input box
-	let row= document.createElement('div');
-	row.className= 'row'
-	let rowData= document.createTextNode(textBox);
+	if(textBox === ''){
+		alert("Please Enter a Task");
+	}else{
+		//Create 2 variables for the master div and text to add from input box
+		let row = document.createElement('div');
+		row.className = 'row'
+		let rowData = document.createTextNode(textBox);
 
-	//Creating another div for buttons
-	let btnDiv= document.createElement('div');
-	btnDiv.className= 'btns'; //Adding a class name
+		//Creating another div for buttons
+		let btnDiv = document.createElement('div');
+		btnDiv.className = 'btns'; //Adding a class name
 
-	//Creating Delete Button
-	let delBtn= document.createElement('button');
-	delBtn.id= 'del';
-	delBtn.innerHTML = '<i class="fas fa-times"></i>'
-	delBtn.setAttribute("onclick", "done(this)");//Setting event listener within function
+		//Creating Delete Button
+		let delBtn = document.createElement('button');
+		delBtn.id = 'del';
+		delBtn.innerHTML = '<i class="fas fa-times"></i>'
+		delBtn.setAttribute("onclick", "done(this)");//Setting event listener within function
 
-	//Creating Done Button
-	let finishBtn = document.createElement('button');
-	finishBtn.id = 'done';
-	finishBtn.innerHTML = '<i class="fas fa-check"></i>'
-	finishBtn.setAttribute("onclick" , "finish(this)");
+		//Creating Done Button
+		let finishBtn = document.createElement('button');
+		finishBtn.id = 'done';
+		finishBtn.innerHTML = '<i class="fas fa-check"></i>'
+		finishBtn.setAttribute("onclick", "finish(this)");
 
-	//Creating Undone Button
-	let undoneBtn = document.createElement('button');
-	undoneBtn.id = 'undone';
-	undoneBtn.innerHTML = '<i class="fas fa-undo"></i>'
-	undoneBtn.setAttribute("onclick", "undone(this)");
+		//Creating Undone Button
+		let undoneBtn = document.createElement('button');
+		undoneBtn.id = 'undone';
+		undoneBtn.innerHTML = '<i class="fas fa-undo"></i>'
+		undoneBtn.setAttribute("onclick", "undone(this)");
+
+		//Appending Elements
+		row.appendChild(rowData);
+		row.appendChild(btnDiv);
+		btnDiv.appendChild(delBtn);
+		btnDiv.appendChild(finishBtn);
+		btnDiv.appendChild(undoneBtn);
+		displayArea.appendChild(row);
+		console.log(row);
+
+		//Styling for cleaner look
+		row.style.display = "flex";
+		btnDiv.style.marginLeft = "auto";
+
+		input.value = '';
+
+		//Add to Local Storage
+		storeInLs(textBox);
+
+		checked();
+	}
 	
-	//Appending Elements
-	row.appendChild(rowData);
-	row.appendChild(btnDiv);
-	btnDiv.appendChild(delBtn);
-	btnDiv.appendChild(finishBtn);
-	btnDiv.appendChild(undoneBtn);
-	displayArea.appendChild(row);	
-	console.log(row);
-
-	//Styling for cleaner look
-	row.style.display = "flex";
-	btnDiv.style.marginLeft = "auto";	
-
-	input.value = '';
-
-	//Add to Local Storage
-	storeInLs(textBox);
-
-	checked();
 }
 
 //Local Storage
@@ -210,6 +215,7 @@ function finish(el){
 	let sel_par = sel.parentNode;
 	
 	sel_par.style.textDecoration = "line-through";
+	
 }
 
 function undone(el) {
